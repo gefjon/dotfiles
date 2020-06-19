@@ -1,0 +1,8 @@
+* phoebe's dotfiles
+  yeah lamo it's a dotfile repo what more is there to say.
+** install
+   #+begin_src sh
+     sh install.sh
+   #+end_src
+   note that script inspects ~$(pwd)~ in order to symlink files by absolute path, so you
+   have to be in this directory to run it! no ~cd ~; sh path/to/dotfiles/install.sh~!
