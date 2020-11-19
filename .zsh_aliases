@@ -1,0 +1,50 @@
+# -*- mode: sh; -*-
+
+function errcho {
+    >&2 echo "$@"
+}
+
+function sign {
+    if [[ -z "$1" ]]; then
+        errcho "Usage: sign filepath"
+        return 1
+    fi
+    if which codesign; then
+        codesign -s - -f $1
+    fi
+}
+
+function repo {
+    git rev-parse --show-toplevel
+}
+
+function reponame {
+    basename `repo`
+}
+
+function rust_run {
+    if [[ -z "$2" ]]; then
+        local exe_name=`reponame`
+    else
+        local exe_name=$2
+    fi
+    case "$1" in
+        ((|-|--)r(|elease))
+            local target=release
+            local build_args=--release
+            ;;
+        (|((|-|--)d(|ebug)))
+            local target=debug
+            local build_args=""
+            ;;
+        (*)
+            errcho "Usage: rust_run [target [executable]]
+where target is d[ebug] or r[elease]"
+            return 1
+            ;;
+    esac
+    cargo build ${build_args}
+    local exe="`repo`/target/${target}/${exe_name}"
+    sign ${exe}
+    ${exe}
+}

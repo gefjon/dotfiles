@@ -16,6 +16,6 @@ for lisp_dotfile in .sbclrc ccl-init.lisp .clinit.cl; do
 done
 
 # misc - put in place by name
-for misc_dotfile in .zshrc .slynk.lisp; do
+for misc_dotfile in .zshrc .zsh_aliases .slynk.lisp; do
     put_dotfile $misc_dotfile
 done
