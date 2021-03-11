@@ -9,7 +9,7 @@ function sign {
         errcho "Usage: sign filepath"
         return 1
     fi
-    if which codesign; then
+    if which codesign > /dev/null 2>&1; then
         codesign -s - -f $1
     fi
 }
